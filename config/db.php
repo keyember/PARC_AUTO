@@ -1,10 +1,17 @@
 <?php
-// db.php
-$host = 'localhost';
-$db   = 'parc_auto';
-$user = 'root';   // adapte
-$pass = '4114N1i53!081221..';       // adapte
-$charset = 'utf8mb4';
+
+$envFile = __DIR__ . '/.env';
+if (!file_exists($envFile)) {
+    die('Erreur : fichier .env non trouvé');
+}
+
+$env = parse_ini_file($envFile);
+
+$host = $env['DB_HOST'] ?? throw new Exception('DB_HOST non défini');
+$db   = $env['DB_NAME'] ?? throw new Exception('DB_NAME non défini');
+$user = $env['DB_USER'] ?? throw new Exception('DB_USER non défini');
+$pass = $env['DB_PASS'] ?? throw new Exception('DB_PASS non défini');
+$charset = $env['DB_CHARSET'] ?? 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
